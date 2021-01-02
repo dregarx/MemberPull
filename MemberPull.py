@@ -26,8 +26,8 @@ async def pull_members(ctx):
         for member in server.members:
             user_writer.writerow([member.display_name]) 
     outfile = discord.File('member_list.csv')
-    now = datetime.datetime.now()
-    nowstring = now.strftime('%H:%M, %m/%d/%y (PST).')
+    now = datetime.datetime.utcnow()
+    nowstring = now.strftime('%H:%M, %m/%d/%y (UTC).')
     outstring = 'Members of {0} at '.format(server) + nowstring
     await ctx.send(content=outstring, file=outfile)
 
