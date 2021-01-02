@@ -15,34 +15,16 @@ bot = commands.Bot(command_prefix='>', intents=intents)
 async def on_ready():
     print('Logged on as {0.user}.'.format(bot))
 
-@bot.event
-async def on_message(message):
-    if message.author == bot.user:
-        return
-    if message.content.startswith('$test'):
-        await message.channel.send('present')
-    if message.content.startswith('$pull'):
-        # me experimenting while commands nonresponsive
-        return
-        server = message.guild
-        await server.chunk()
-        names = [member.display_name for member in server.members]
-
-"""
-This bot simply does not notice commands and I can't figure out why.
-"""
-
 @bot.command()
-async def why(ctx):
-    print('entered')
-    await ctx.send('because')
-
-@bot.command()
-async def pull(ctx):
+async def pull_users(ctx):
     server = ctx.guild
     await server.chunk()
     names = [member.display_name for member in server.members]
-    print(len(names))
-    print(names)
+    with open('user_list.csv', 'w', newline='') as csvfile:
+        user_writer = csv.writer(csvfile, delimiter=' ')
+        for member in server.members:
+            user_writer.writerow([member.display_name]) 
+    outp = discord.File('user_list.csv')
+    await ctx.send(file=outp)
 
 bot.run(token)

@@ -1,3 +1,3 @@
 # UserPull
 
-A simple bot to perform some simple functions while I familiarize myself with the basics of building such entities.
+Discord bot that gathers the usernames of the members of a server and sends them in csv format.
